@@ -13,7 +13,6 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            color: white;
         }
 
         :root {
@@ -49,37 +48,13 @@
             justify-content: center;
         }
 
-        .error-page {
-            min-height: 100vh;
-            display: flex;
-            justify-content: center; /* Horizontal */
-            align-items: center;     /* Vertical */
-        }
-
-        .wrap {
-            font-size: 1.8rem;
-            font-weight: 800;
-            text-align: center;
-            max-width: 600px;
-            padding: 2rem;
-        }
-
-        .wrap h1 {
-            font-size: 5rem;
-            margin-bottom: 1rem;
-        }
-
-        .wrap p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-        }
-
         /* ========== NAVBAR ========== */
         .navbar {
             background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             padding: 1rem 0;
         }
+
         .navbar-brand {
             font-size: 1.8rem;
             font-weight: 800;
@@ -457,6 +432,7 @@
         }
     </style>
 
+    <?= $this->renderSection('pageStyles') ?>
 </head>
 
 <body>
@@ -481,22 +457,26 @@
 
             <ul class="navbar-nav ms-auto">
 
+                <li class="nav-item">
+                    <a class="nav-link" href="<?= base_url() ?>">
+                        <i class="fas fa-home"></i> Home
+                    </a>
+                </li>
+
+                
+
+
+
             </ul>
 
         </div>
 
     </div>
 </nav>
+
 <!-- ========== MAIN CONTENT ========== -->
 <main class="container-lg">
-    <div class="container text-center">
-
-        <h1 class="headline"><?= lang('Errors.whoops') ?></h1>
-
-        <p class="lead"><?= lang('Errors.weHitASnag') ?></p>
-
-    </div>
-
+    <?= $this->renderSection('main') ?>
 </main>
 
 <!-- ========== FOOTER ========== -->
@@ -562,7 +542,7 @@
     document.getElementById('year').textContent = new Date().getFullYear();
 </script>
 
+<?= $this->renderSection('pageScripts') ?>
 
 </body>
 </html>
-

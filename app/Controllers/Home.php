@@ -1,15 +1,24 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\ProductModel;
 
 class Home extends BaseController
 {
-    public function index(): string
+    protected $data = [];
+    protected $productModel;
+
+    public function __construct()
     {
-        if (auth()->loggedIn() && auth()->user()->inGroup('admin')) 
-        {
-        return view('admin/index');
+        $this->productModel = new ProductModel();
+    }
+
+    public function index()
+    {
+        $this->data['products'] = $this->productModel->limit(8)->findAll();
+        if (auth()->loggedIn()) {
+            return redirect()->to('/user');
         }
-        return view('welcome_message');
+        return view('home', $this->data);
     }
 }

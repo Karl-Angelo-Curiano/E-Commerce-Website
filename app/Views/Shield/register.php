@@ -12,7 +12,7 @@
 
         <div class="login-header">
             <h3><?= lang('Auth.register') ?></h3>
-            <p class="mb-0">Create your MyShop account</p>
+            <p class="mb-0">Create your KACC SHOP account</p>
         </div>
 
         <div class="card-body p-4">

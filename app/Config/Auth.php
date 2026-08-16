@@ -456,6 +456,8 @@ class Auth extends ShieldAuth
 
         if ($user->inGroup('admin')) {
             return site_url('admin');
+        }else {
+            return site_url('user');
         }
 
         return site_url('/');
