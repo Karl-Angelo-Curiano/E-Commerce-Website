@@ -1,69 +1,110 @@
-# CodeIgniter 4 Application Starter
+# 🛒 E-Commerce Platform
 
-## What is CodeIgniter?
+A full-stack e-commerce web application built with **CodeIgniter 4**, featuring customer-facing shopping, an interactive checkout flow with live map-based delivery selection, and a full admin dashboard for managing the store.
 
-CodeIgniter is a PHP full-stack web framework that is light, fast, flexible and secure.
-More information can be found at the [official site](https://codeigniter.com).
 
-This repository holds a composer-installable app starter.
-It has been built from the
-[development repository](https://github.com/codeigniter4/CodeIgniter4).
+---
 
-More information about the plans for version 4 can be found in [CodeIgniter 4](https://forum.codeigniter.com/forumdisplay.php?fid=28) on the forums.
+## Overview
 
-You can read the [user guide](https://codeigniter.com/user_guide/)
-corresponding to the latest version of the framework.
+This project simulates a real online store, built to practice full-stack PHP development with CodeIgniter 4 — from database-driven product catalogs to session-based authentication, role-based access control, and third-party API integration (interactive maps + reverse geocoding).
 
-## Installation & updates
+## ✨ Features
 
-`composer create-project codeigniter4/appstarter` then `composer update` whenever
-there is a new release of the framework.
+### Customer-Facing
+- **Product catalog** with image galleries, thumbnails, and related-products carousel
+- **Product detail pages** with dynamic stock badges (Low Stock / Best Seller / New Arrival / Trending)
+- **Shopping cart** with live quantity adjustment and item removal
+- **Checkout flow** with:
+  - Interactive delivery map (Leaflet + OpenStreetMap) — drag or click to drop a pin
+  - Automatic address reverse-geocoding from the selected map point
+  - Multiple payment methods: Cash on Delivery, GCash, Maya, Credit/Debit Card, Bank Transfer
+  - Order notes field for delivery instructions
+- **User authentication** (login, registration, session handling)
+### Admin Dashboard
+- Product management (create, update, delete)
+- Category management
+- Order management and status updates
+- Payment tracking
+- User account management
+- Role-based route protection (`session` + `group:admin` filters)
 
-When updating, check the release notes to see if there are any changes you might need to apply
-to your `app` folder. The affected files can be copied or merged from
-`vendor/codeigniter4/framework/app`.
+## 🛠️ Tech Stack
 
-## Setup
+| Layer | Technology |
+|---|---|
+| Backend | PHP 8.2+, CodeIgniter 4 |
+| Auth | CodeIgniter Shield |
+| Database | MySQL |
+| Frontend | Bootstrap 5, Font Awesome, custom CSS |
+| Maps | Leaflet.js + OpenStreetMap tiles |
+| Geocoding | Nominatim (OpenStreetMap) |
 
-Copy `env` to `.env` and tailor for your app, specifically the baseURL
-and any database settings.
+## 🚀 Getting Started
 
-## Important Change with index.php
+### Requirements
+- PHP 8.2 or higher, with the `intl` and `mbstring` extensions enabled
+- MySQL (with the `mysqlnd` extension enabled)
+- Composer
 
-`index.php` is no longer in the root of the project! It has been moved inside the *public* folder,
-for better security and separation of components.
+### Installation
 
-This means that you should configure your web server to "point" to your project's *public* folder, and
-not to the project root. A better practice would be to configure a virtual host to point there. A poor practice would be to point your web server to the project root and expect to enter *public/...*, as the rest of your logic and the
-framework are exposed.
+```bash
+# Clone the repository
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
 
-**Please** read the user guide for a better explanation of how CI4 works!
+# Install dependencies
+composer install
 
-## Repository Management
+# Set up environment config
+cp env .env
+```
 
-We use GitHub issues, in our main repository, to track **BUGS** and to track approved **DEVELOPMENT** work packages.
-We use our [forum](http://forum.codeigniter.com) to provide SUPPORT and to discuss
-FEATURE REQUESTS.
+Edit `.env` and configure:
+- `app.baseURL` — your local/dev URL
+- `database.default.*` — your MySQL connection details
 
-This repository is a "distribution" one, built by our release preparation script.
-Problems with it can be raised on our forum, or as issues in the main repository.
+```bash
+# Run database migrations
+php spark migrate
 
-## Server Requirements
+# (Optional) seed sample data
+php spark db:seed DatabaseSeeder
 
-PHP version 8.2 or higher is required, with the following extensions installed:
+# Start the development server
+php spark serve
+```
 
-- [intl](http://php.net/manual/en/intl.requirements.php)
-- [mbstring](http://php.net/manual/en/mbstring.installation.php)
+Visit `http://localhost:8080` in your browser.
 
-> [!WARNING]
-> - The end of life date for PHP 7.4 was November 28, 2022.
-> - The end of life date for PHP 8.0 was November 26, 2023.
-> - The end of life date for PHP 8.1 was December 31, 2025.
-> - If you are still using below PHP 8.2, you should upgrade immediately.
-> - The end of life date for PHP 8.2 will be December 31, 2026.
+> **Note:** CodeIgniter 4 serves from the `public/` folder, not the project root. If deploying to a live server, point your web server's document root to `public/`.
 
-Additionally, make sure that the following extensions are enabled in your PHP:
+## 📁 Project Structure
 
-- json (enabled by default - don't turn it off)
-- [mysqlnd](http://php.net/manual/en/mysqlnd.install.php) if you plan to use MySQL
-- [libcurl](http://php.net/manual/en/curl.requirements.php) if you plan to use the HTTP\CURLRequest library
+```
+app/
+├── Controllers/
+│   ├── Customer/       # Storefront: catalog, cart, checkout
+│   └── Admin.php       # Admin dashboard
+├── Models/              # ProductModel, CartModel, ProductImageModel, etc.
+├── Views/
+│   ├── customer/        # Product listing, product detail, cart/checkout
+│   └── admin/            # Dashboard views
+└── Config/
+    └── Routes.php       # Route definitions & auth filters
+```
+
+## 🔒 Key Implementation Notes
+
+- Routes are grouped by role (`user`, `admin`) and protected with `session` and `group:*` filters via CodeIgniter Shield.
+- Cart quantity updates and item deletion use isolated per-item `<form>` submissions (kept separate from the checkout form) to avoid invalid nested-HTML forms and keep each action independently submittable.
+- Delivery coordinates are captured via Leaflet's draggable marker and reverse-geocoded client-side through Nominatim's free API for a human-readable address.
+
+## 📄 License
+
+This project is open-sourced under the [MIT license](LICENSE).
+
+## 👤 Author
+
+**KARL ANGELO C. CURIANO**
